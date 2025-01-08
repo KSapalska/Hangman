@@ -93,7 +93,7 @@ header p {
   justify-content: center;
 }
 
-.keyboard {
+/* .keyboard {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
@@ -113,6 +113,31 @@ header p {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+ */
+ section.keyboard {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  max-width: 450px;
+  margin-bottom: 36px;
+}
+
+section.keyboard > button {
+  height: 35px;
+  width: 35px;
+  background-color: #FCBA29;
+  border: 1px solid #D7D7D7;
+  border-radius: 3px;
+  cursor: pointer;
+}
+ 
+section.keyboard > button.wrong {
+  background-color: #EC5D49;
+}
+section.keyboard > button.correct {
+  background-color: green;
 }
 
 button.new-game {
