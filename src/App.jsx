@@ -7,7 +7,8 @@ import clsx from 'clsx';
 
 function App() {
   const [currentWord, setCurrentWord] = React.useState("kapibara");
-  const letterElements = currentWord.split("");
+  const letterElements = currentWord.split("")
+;
   const [guessedLetters, setGuessedLetters] = React.useState([]);
   const alphabet = "abcdefghijklmnopqrstuvwxyz";
   const languageElements = languages.map((language) => {
@@ -22,12 +23,9 @@ function App() {
     );
   });
 
-  
-  console.log(guessedLetters);
-
-  const word = letterElements.map((letter, index) => (
-    <span key={index} className="letter">
-      {letter.toUpperCase()}
+    const word = letterElements.map((letter, index) => (
+    <span key={index} className="letter">{guessedLetters.includes(letter) ?
+      letter.toUpperCase(): "" }
     </span>
   ));
   const keybordElements = alphabet.split("").map((letter) => {
@@ -40,7 +38,7 @@ function App() {
 correct: isCorrect,
 wrong: isWrong
     })
-    console.log(className)
+    
      
     return (
       <button
@@ -61,7 +59,7 @@ wrong: isWrong
       prevLetters.includes(letter) ? prevLetters : [...prevLetters, letter]
     
     );
-    console.log(`Guessed Letters: ${guessedLetters}`);
+    
   }
 
   return (
