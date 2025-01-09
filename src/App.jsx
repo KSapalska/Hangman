@@ -25,7 +25,7 @@ function App() {
       color: language.color,
     };
     return (
-      <span className={'chip ${}'}
+      <span className={`chip ${isLanguageLost ? "lost" : ""}`}
       key={language.name} 
       style={styles}>
         {language.name}
