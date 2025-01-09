@@ -6,18 +6,28 @@ import clsx from 'clsx';
 
 
 function App() {
-  const [currentWord, setCurrentWord] = React.useState("kapibara");
-  const letterElements = currentWord.split("")
-;
+  const [currentWord, setCurrentWord] = React.useState("kapibara")
   const [guessedLetters, setGuessedLetters] = React.useState([]);
+  
   const alphabet = "abcdefghijklmnopqrstuvwxyz";
-  const languageElements = languages.map((language) => {
+  const wrongGuessArray= guessedLetters.filter(letter=> !currentWord.includes(letter))
+  const wrongGuessCount= wrongGuessArray.length
+  
+  console.log(wrongGuessCount)
+
+  const letterElements = currentWord.split("")
+  
+  const languageElements = languages.map((language,index) => {
+    const isLanguageLost= index<wrongGuessCount
+
     const styles = {
       backgroundColor: language.backgroundColor,
       color: language.color,
     };
     return (
-      <span className="chip" key={language.name} style={styles}>
+      <span className={'chip ${}'}
+      key={language.name} 
+      style={styles}>
         {language.name}
       </span>
     );
@@ -28,7 +38,7 @@ function App() {
       letter.toUpperCase(): "" }
     </span>
   ));
-  const keybordElements = alphabet.split("").map((letter) => {
+    const keybordElements = alphabet.split("").map((letter) => {
     const isGuessed =guessedLetters.includes(letter)
     const isCorrect= isGuessed && currentWord.includes(letter)
     const isWrong = isGuessed && !currentWord.includes(letter)
@@ -57,6 +67,7 @@ wrong: isWrong
   function handleClick(letter) {
     setGuessedLetters((prevLetters) =>
       prevLetters.includes(letter) ? prevLetters : [...prevLetters, letter]
+    
     
     );
     
