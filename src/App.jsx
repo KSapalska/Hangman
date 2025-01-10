@@ -3,12 +3,14 @@ import Header from "./components/Header";
 import Status from "./components/Status";
 import { languages } from "./languages";
 import clsx from 'clsx';
+import {getFarewellText} from "./utils";
 
 
 function App() {
   const [currentWord, setCurrentWord] = React.useState("kapibara")
   const [guessedLetters, setGuessedLetters] = React.useState([]);
-  
+  const [farewellText, setFarewellText] = React.useState("");
+
   const alphabet = "abcdefghijklmnopqrstuvwxyz";
   const wrongGuessArray= guessedLetters.filter(letter=> !currentWord.includes(letter))
   const wrongGuessCount= wrongGuessArray.length
@@ -18,13 +20,15 @@ function App() {
 
   const isGameLost = wrongGuessCount >= languages.length - 1
   const isGameOver = isGameWon || isGameLost
+  const lastGuessedLetter = guessedLetters[guessedLetters.length - 1]
+  const isLastGuessIncorrect = lastGuessedLetter && !currentWord.includes(lastGuessedLetter)
 
   const letterElements = currentWord.split("")
   
   const languageElements = languages.map((language,index) => {
     
     const isLanguageLost= index<wrongGuessCount
-
+     
     const styles = {
       backgroundColor: language.backgroundColor,
       color: language.color,
@@ -72,17 +76,19 @@ wrong: isWrong
   function handleClick(letter) {
     setGuessedLetters((prevLetters) =>
       prevLetters.includes(letter) ? prevLetters : [...prevLetters, letter]
-    
-    
+       
     );
     
-  }
+    if (!currentWord.includes(letter)) {
+      const lostLanguage = languages[wrongGuessCount];
+      setFarewellText(getFarewellText(lostLanguage.name));
+  }}
 
   return (
     <>
       <main>
         <Header />
-         <Status isGameOver={isGameOver} isGameWon={isGameWon}/>
+         <Status isGameOver={isGameOver} isGameWon={isGameWon} farewellText={farewellText} />
         <section className="language-chips">{languageElements}</section>
         <section className="word">{word}</section>
         <section className="keyboard">{keybordElements}</section>
@@ -90,6 +96,6 @@ wrong: isWrong
       </main>
     </>
   );
-}
+  }
 
 export default App;
