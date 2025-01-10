@@ -12,12 +12,17 @@ function App() {
   const alphabet = "abcdefghijklmnopqrstuvwxyz";
   const wrongGuessArray= guessedLetters.filter(letter=> !currentWord.includes(letter))
   const wrongGuessCount= wrongGuessArray.length
+  const isGameWon = currentWord.split("").every(letter=>guessedLetters.includes(letter))
   
-  console.log(wrongGuessCount)
+
+
+  const isGameLost = wrongGuessCount >= languages.length - 1
+  const isGameOver = isGameWon || isGameLost
 
   const letterElements = currentWord.split("")
   
   const languageElements = languages.map((language,index) => {
+    
     const isLanguageLost= index<wrongGuessCount
 
     const styles = {
@@ -77,11 +82,11 @@ wrong: isWrong
     <>
       <main>
         <Header />
-        <Status />
+         <Status isGameOver={isGameOver} isGameWon={isGameWon}/>
         <section className="language-chips">{languageElements}</section>
         <section className="word">{word}</section>
         <section className="keyboard">{keybordElements}</section>
-        <button className="new-game">New Game</button>
+        { isGameOver && <button className="new-game">New Game</button>}
       </main>
     </>
   );
