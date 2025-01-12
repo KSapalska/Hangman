@@ -43,11 +43,18 @@ function App() {
     );
   });
 
-    const word = letterElements.map((letter, index) => (
-    <span key={index} className="letter">{guessedLetters.includes(letter) ?
+    const word = letterElements.map((letter, index) => {
+      const shouldRevealLetter = isGameLost || guessedLetters.includes(letter)
+      const letterClassName = clsx(
+        isGameLost && !guessedLetters.includes(letter) && "missed-letter"
+    )
+      return(
+      
+    <span key={index} className={letterClassName}>{shouldRevealLetter ?
       letter.toUpperCase(): "" }
     </span>
-  ));
+  )});
+
     const keybordElements = alphabet.split("").map((letter) => {
     const isGuessed =guessedLetters.includes(letter)
     const isCorrect= isGuessed && currentWord.includes(letter)
@@ -90,6 +97,14 @@ wrong: isWrong
       setFarewellText(getFarewellText(lostLanguage.name));
   }}
 
+function setNewGame(){
+  guessedLetters
+  setCurrentWord(getRandomWord())
+  setGuessedLetters([])
+}
+
+
+
   return (
     <>
       <main>
@@ -98,7 +113,7 @@ wrong: isWrong
         <section className="language-chips">{languageElements}</section>
         <section className="word">{word}</section>
         <section className="keyboard">{keybordElements}</section>
-        { isGameOver && <button className="new-game">New Game</button>}
+        { isGameOver && <button onClick={setNewGame} className="new-game">New Game</button>}
       </main>
     </>
   );
