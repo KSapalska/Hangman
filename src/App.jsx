@@ -3,11 +3,12 @@ import Header from "./components/Header";
 import Status from "./components/Status";
 import { languages } from "./languages";
 import clsx from 'clsx';
-import {getFarewellText} from "./utils";
+import {getFarewellText, getRandomWord} from "./utils";
+
 
 
 function App() {
-  const [currentWord, setCurrentWord] = React.useState("kapibara")
+  const [currentWord, setCurrentWord] = React.useState(()=>getRandomWord())
   const [guessedLetters, setGuessedLetters] = React.useState([]);
   const [farewellText, setFarewellText] = React.useState("");
 
@@ -64,6 +65,8 @@ wrong: isWrong
       className={className}
       key={letter}
       disabled={isGameOver}
+      aria-disabled={guessedLetters.includes(letter)}
+      aria-label={`Letter ${letter}`}
       onClick={() => handleClick(letter)}
 
     >
@@ -91,7 +94,7 @@ wrong: isWrong
     <>
       <main>
         <Header />
-         <Status isGameOver={isGameOver} isGameWon={isGameWon} farewellText={farewellText} />
+         <Status aria-live="polite" isGameOver={isGameOver} isGameWon={isGameWon} farewellText={farewellText} />
         <section className="language-chips">{languageElements}</section>
         <section className="word">{word}</section>
         <section className="keyboard">{keybordElements}</section>
