@@ -63,7 +63,9 @@ wrong: isWrong
       <button
       className={className}
       key={letter}
+      disabled={isGameOver}
       onClick={() => handleClick(letter)}
+
     >
       {letter.toUpperCase()}
     </button>
@@ -74,6 +76,7 @@ wrong: isWrong
   
 
   function handleClick(letter) {
+   
     setGuessedLetters((prevLetters) =>
       prevLetters.includes(letter) ? prevLetters : [...prevLetters, letter]
        
