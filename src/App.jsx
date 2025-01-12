@@ -4,7 +4,7 @@ import Status from "./components/Status";
 import { languages } from "./languages";
 import clsx from 'clsx';
 import {getFarewellText, getRandomWord} from "./utils";
-
+import Confetti from "react-confetti"
 
 
 function App() {
@@ -108,6 +108,13 @@ function setNewGame(){
   return (
     <>
       <main>
+      {
+                isGameWon && 
+                    <Confetti
+                        recycle={false}
+                        numberOfPieces={1000}
+                    />
+            }
         <Header />
          <Status aria-live="polite" isGameOver={isGameOver} isGameWon={isGameWon} farewellText={farewellText} />
         <section className="language-chips">{languageElements}</section>
